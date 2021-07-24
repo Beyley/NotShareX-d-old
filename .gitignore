@@ -1,0 +1,15 @@
+.dub
+docs.json
+__dummy.html
+docs/
+/notsharex
+notsharex.so
+notsharex.dylib
+notsharex.dll
+notsharex.a
+notsharex.lib
+notsharex-test-*
+*.exe
+*.o
+*.obj
+*.lst

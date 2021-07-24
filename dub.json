@@ -1,0 +1,13 @@
+{
+	"authors": [
+		"Beyley Thomas"
+	],
+	"copyright": "Copyright © 2021, Beyley Thomas",
+	"dependencies": {
+		"painlessjson": "~>1.4.0",
+		"painlesstraits": "~>0.3.0"
+	},
+	"description": "A quick screenshot tool for linux",
+	"license": "GPL-2.0",
+	"name": "notsharex"
+}
