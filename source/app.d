@@ -210,6 +210,5 @@ void main()
     }
 
     Helpers.copyToClipboard(finalLink);
-    exit(0);
-    //Helpers.espeak(config.endMessage);
+    Helpers.espeak(config.endMessage);
 }
