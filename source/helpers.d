@@ -39,6 +39,6 @@ class Helpers {
     
     /// Copies some text to the clipboard
     static void copyToClipboard(string text) {
-        executeShell(format("echo \"%s\" | xsel -b > /dev/null", text));
+        executeShell(format("echo \"%s\" | tr -d '\n' | xsel -b > /dev/null", text));
     }
 }

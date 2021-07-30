@@ -2,11 +2,11 @@ module notsharex.main;
 
 static import std.process;
 import std.stdio, std.path, std.file, std.exception, std.format,
-std.algorithm, std.ascii, std.base64, std.conv, std.random, std.range, std.json, std.utf;
+std.algorithm, std.ascii, std.base64, std.conv, std.random, std.range, 
+std.json, std.utf, std.string;
 import core.stdc.stdlib : exit;
 
 import painlessjson;
-import asynchronous;
 
 import notsharex.enums, notsharex.helpers, notsharex.config;
 
@@ -123,6 +123,7 @@ void main()
         }
     }
 
-    Helpers.copyToClipboard(finalLink);
+    Helpers.copyToClipboard(std.string.strip(finalLink));
     Helpers.espeak(config.endMessage);
 }
+ 
