@@ -1,13 +1,17 @@
 module notsharex.main;
 
 static import std.process;
-
 import std.stdio, std.path, std.file, std.exception, std.format,
 std.algorithm, std.ascii, std.base64, std.conv, std.random, std.range, std.json, std.utf;
 import core.stdc.stdlib : exit;
+
 import painlessjson;
+import asynchronous;
 
 import notsharex.enums, notsharex.helpers, notsharex.config;
+
+/// The apps required for the app to work
+auto RequiredApps = [ "xfce4-screenshooter", "feh", "xdotool", "gio", "xsel", "espeak" ];
 
 void main()
 {
@@ -37,10 +41,10 @@ void main()
     }
 
     // Check if our required apps are installed
-    Helpers.checkForApps([ "xfce4-screenshooter", "feh", "xdotool", "gio", "xsel", "espeak" ]);
+    Helpers.checkForApps(RequiredApps);
 
     if(config.staticPreview) {
-        // TODO IMPLEMENT STATIC PREVIEW
+        // TODO TAKE AND DISPLAY STATIC PREVIEW
         assert(0);
     }
 
@@ -112,7 +116,11 @@ void main()
             assert(0);
         }
 
-        default: assert(0);
+        default: {
+            writeln("Unknown connection type!");
+
+            assert(0);
+        }
     }
 
     Helpers.copyToClipboard(finalLink);

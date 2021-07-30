@@ -40,6 +40,5 @@ class Helpers {
     /// Copies some text to the clipboard
     static void copyToClipboard(string text) {
         executeShell(format("echo \"%s\" | xsel -b > /dev/null", text));
-                //exit(0);
     }
 }

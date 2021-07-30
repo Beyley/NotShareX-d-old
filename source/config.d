@@ -45,11 +45,7 @@ class Config {
 
     /// Reads the config
     static Config readConfig() {
-        Config tempConfig = new Config();
-
-        string fullFile = cast(string)read(expandTilde(configFilePath).byChar);
-
-        return fromJSON!Config(parseJSON(fullFile));
+        return fromJSON!Config(parseJSON(cast(string)read(expandTilde(configFilePath).byChar)));
     }
 
     /// Writes the current config to a file

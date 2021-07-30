@@ -6,6 +6,6 @@ enum ConnectionType {
     smb,
     /// File Transfer Protocol
     ftp,
-    /// idk what it stands for
+    /// Client URL
     curl
 }
