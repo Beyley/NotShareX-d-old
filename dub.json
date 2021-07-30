@@ -4,6 +4,7 @@
 	],
 	"copyright": "Copyright © 2021, Beyley Thomas",
 	"dependencies": {
+		"glui": "~>0.3.0",
 		"painlessjson": "~>1.4.0",
 		"painlesstraits": "~>0.3.0"
 	},

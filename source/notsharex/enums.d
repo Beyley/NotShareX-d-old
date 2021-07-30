@@ -1,11 +1,12 @@
+///
 module notsharex.enums;
 
 /// The connection type for the server
 enum ConnectionType {
     /// Samba
-    smb,
+    smb = 0,
     /// File Transfer Protocol
-    ftp,
+    ftp = 1,
     /// Client URL
-    curl
+    curl = 2
 }

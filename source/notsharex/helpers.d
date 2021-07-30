@@ -1,8 +1,10 @@
+///
 module notsharex.helpers;
 
 import std.stdio, std.path, std.file, std.exception, std.process, std.format,
 std.algorithm, std.ascii, std.base64, std.conv, std.random, std.range, std.json, std.utf;
 import core.stdc.stdlib : exit;
+
 import painlessjson;
 
 /// Various helper functions
@@ -40,5 +42,10 @@ class Helpers {
     /// Copies some text to the clipboard
     static void copyToClipboard(string text) {
         executeShell(format("echo \"%s\" | tr -d '\n' | xsel -b > /dev/null", text));
+    }
+
+    /// Reads an entire file into a string
+    static string readWholeFile(string path) {
+        return cast(string)read(expandTilde(path).byChar);
     }
 }

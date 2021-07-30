@@ -1,3 +1,4 @@
+///
 module notsharex.config;
 
 import std.stdio, std.path, std.file, std.exception, std.process, std.format,
@@ -5,7 +6,7 @@ std.algorithm, std.ascii, std.base64, std.conv, std.random, std.range, std.json,
 import core.stdc.stdlib : exit;
 import painlessjson;
 
-import notsharex.enums;
+import notsharex.enums, notsharex.helpers;
 
 /// A struct that defines the configuration
 class Config {
@@ -26,11 +27,11 @@ class Config {
 
     /// The server address
     string server = "smb://192.168.0.201";
-    /// The server name?
+    /// The server name
     string serverName = "192.168.0.201";
     /// The share to access
     string share = "root";
-    /// The link for the final thing
+    /// The link for the final address
     string link = "https://i.beyleyisnot.moe";
     /// The path in the share to move to
     string pathToMoveTo = "home/beyley/image-subdomain";
@@ -43,9 +44,14 @@ class Config {
     /// The credentials file
     string credFile = "~/.config/notsharex/.creds";
 
+    /// Saves the current config
+    void save() {
+        Config.writeConfig(this);
+    }
+
     /// Reads the config
     static Config readConfig() {
-        return fromJSON!Config(parseJSON(cast(string)read(expandTilde(configFilePath).byChar)));
+        return fromJSON!Config(parseJSON(Helpers.readWholeFile(expandTilde(Config.configFilePath))));
     }
 
     /// Writes the current config to a file

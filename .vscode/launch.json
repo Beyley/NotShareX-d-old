@@ -11,6 +11,16 @@
             "target": "./notsharex",
             "cwd": "${workspaceRoot}",
             // "valuesFormatting": "parseText"
+        },
+        {
+            "preLaunchTask": "build",
+            "name": "Debug (Config)",
+            "type": "gdb",
+            "request": "launch",
+            "target": "./notsharex",
+            "arguments": "--config",
+            "cwd": "${workspaceRoot}",
+            // "valuesFormatting": "parseText"
         }
     ]
 }
