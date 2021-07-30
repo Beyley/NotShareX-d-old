@@ -13,3 +13,4 @@ notsharex-test-*
 *.o
 *.obj
 *.lst
+core.*
