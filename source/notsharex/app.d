@@ -424,7 +424,7 @@ void screenshot(Config config) {
         }
 
         case ConnectionType.curl: {
-            Helpers.curl(config);
+            finalLink = Helpers.curl(config);
 
             break;
         }
