@@ -47,6 +47,10 @@ class Helpers {
         std.process.executeShell(format("echo \"%s\" | tr -d '\n' | xsel -b > /dev/null", text));
     }
 
+    static void takeStaticImage(Config config) {
+        std.process.executeShell(format("xfce4-screenshooter -f -s %s", buildPath(expandTilde(config.temporaryDirectory), config.staticPreviewPath)));
+    }
+
     /// Makes a CURL request
     static string curl(Config config) {
         return std.process.executeShell(format("curl -s -F \"reqtype=fileupload\" -F \"%s=%s\" -F \"%s=@%s%s\" %s", config.uploadCredsName, config.userHash, config.uploadFileName, config.temporaryDirectory, config.mainImagePath, config.server)).output;

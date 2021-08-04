@@ -1,6 +1,7 @@
 ///
 module notsharex.app;
 
+static import std.process;
 import std.stdio, std.path, std.file, std.exception, std.format,
 std.algorithm, std.ascii, std.base64, std.conv, std.random, std.range, 
 std.json, std.utf, std.string, std.getopt;
@@ -233,14 +234,14 @@ void configWizard(Config config) {
         if(config.connectionType == ConnectionType.smb) {
             stringToWrite = format("%s\n%s\n%s", usernameInput.value, workgroupInput.value, passwordInput.value);
         } else if(config.connectionType == ConnectionType.ftp) {
-            stringToWrite = format("%s\n%s", usernameInput.value, passwordInput.value);
+            stringToWrite = format("%s\n%s\n%s", usernameInput.value, passwordInput.value, "");
         } else if(config.connectionType == ConnectionType.curl) {
+            stringToWrite = format("%s\n%s\n%s", "a", "a", "a");
             config.userHash = passwordInput.value;
             config.save();
         }
 
-        if(config.connectionType != ConnectionType.curl)
-            std.file.write(expandTilde(config.credFile), stringToWrite);
+        std.file.write(expandTilde(config.credFile), stringToWrite);
     };
 
     auto root = vframe(theme, fill,
@@ -376,8 +377,9 @@ void screenshot(Config config) {
     Helpers.checkForApps(RequiredApps);
 
     if(config.staticPreview) {
-        // TODO TAKE AND DISPLAY STATIC PREVIEW
-        assert(0);
+	    Helpers.takeStaticImage(config);
+
+        auto pid = std.process.spawnShell(format("feh %s -x -N -g 5440x1599"));
     }
 
     string fullMainImagePath = buildNormalizedPath(config.temporaryDirectory, config.mainImagePath);
