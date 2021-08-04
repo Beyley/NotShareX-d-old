@@ -136,7 +136,9 @@ void configWizard(Config config) {
     GluiTextInput endMessageInput;
 
     GluiNode credNode;
+    GluiNode usernameNode;
     GluiTextInput usernameInput;
+    GluiNode passwordNode;
     GluiTextInput passwordInput;
     GluiNode workgroupNode;
     GluiTextInput workgroupInput;
@@ -202,11 +204,21 @@ void configWizard(Config config) {
             workgroup = credFile[1];
             password = credFile[2];
 
+            usernameNode.show();
+            passwordNode.show();
             workgroupNode.show();
         } else if(config.connectionType == ConnectionType.ftp) {
             username = credFile[0];
             password = credFile[1];
 
+            usernameNode.show();
+            passwordNode.show();
+            workgroupNode.hide();
+        } else if(config.connectionType == ConnectionType.curl) {
+            password = config.userHash;
+
+            usernameNode.hide();
+            passwordNode.show();
             workgroupNode.hide();
         }
 
@@ -222,9 +234,13 @@ void configWizard(Config config) {
             stringToWrite = format("%s\n%s\n%s", usernameInput.value, workgroupInput.value, passwordInput.value);
         } else if(config.connectionType == ConnectionType.ftp) {
             stringToWrite = format("%s\n%s", usernameInput.value, passwordInput.value);
+        } else if(config.connectionType == ConnectionType.curl) {
+            config.userHash = passwordInput.value;
+            config.save();
         }
 
-        std.file.write(expandTilde(config.credFile), stringToWrite);
+        if(config.connectionType != ConnectionType.curl)
+            std.file.write(expandTilde(config.credFile), stringToWrite);
     };
 
     auto root = vframe(theme, fill,
@@ -265,6 +281,7 @@ void configWizard(Config config) {
                     "Press to change ",
                     () {
                         changeConnectionType();
+                        loadCredFile();
                     }
                 ),
             ),
@@ -312,11 +329,15 @@ void configWizard(Config config) {
 
             vframe(blueTheme, fill, 
                 credNode = vframe(blueTheme, fill, 
-                    usernameInput = textInput(layout!(1, "center"), "Username..."),
-                    passwordInput = textInput(layout!(1, "center"), "Password..."),
+                    usernameNode = vframe(blueTheme, fill, 
+                        usernameInput = textInput(layout!(1, "center"), "Username..."),
+                    ),
+                    passwordNode = vframe(blueTheme, fill, 
+                        passwordInput = textInput(layout!(1, "center"), "Password..."),
+                    ),
                     workgroupNode = vframe(blueTheme, fill, 
                         workgroupInput = textInput(layout!(1, "center"), "Workgroup...")
-                    )
+                    ),
                 ),
                 button(layout!(1, "center"),
                     "Save ",
