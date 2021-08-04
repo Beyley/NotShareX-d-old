@@ -49,7 +49,7 @@ class Helpers {
 
     /// Makes a CURL request
     static string curl(Config config) {
-        return std.process.executeShell(format("curl -F \"reqtype=fileupload\" -F \"%s=%s\" -F \"%s=@%s%s\" %s", config.uploadCredsName, config.userHash, config.uploadFileName, config.temporaryDirectory, config.mainImagePath, config.server)).output;
+        return std.process.executeShell(format("curl -s -F \"reqtype=fileupload\" -F \"%s=%s\" -F \"%s=@%s%s\" %s", config.uploadCredsName, config.userHash, config.uploadFileName, config.temporaryDirectory, config.mainImagePath, config.server)).output;
     }
 
     /// Reads an entire file into a string
