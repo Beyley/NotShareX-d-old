@@ -331,12 +331,21 @@ void configWizard(Config config) {
             vframe(blueTheme, fill, 
                 credNode = vframe(blueTheme, fill, 
                     usernameNode = vframe(blueTheme, fill, 
+                        richLabel(layout!(1, "center"), 
+                            "Username:"
+                        ),
                         usernameInput = textInput(layout!(1, "center"), "Username..."),
                     ),
                     passwordNode = vframe(blueTheme, fill, 
+                        richLabel(layout!(1, "center"), 
+                            "Password:"
+                        ),
                         passwordInput = textInput(layout!(1, "center"), "Password..."),
                     ),
                     workgroupNode = vframe(blueTheme, fill, 
+                        richLabel(layout!(1, "center"), 
+                            "Workgroup:"
+                        ),
                         workgroupInput = textInput(layout!(1, "center"), "Workgroup...")
                     ),
                 ),
