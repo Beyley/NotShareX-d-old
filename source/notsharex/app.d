@@ -374,14 +374,6 @@ void configWizard(Config config) {
 
 /// Takes a screenshot
 void screenshot(Config config) {
-    if(exists(buildPath(config.temporaryDirectory, "notsharex.lock"))) {
-        std.file.remove(buildPath(config.temporaryDirectory, "notsharex.lock"));
-
-        std.process.executeShell("killall notsharex");
-    }
-
-    std.file.write(buildPath(config.temporaryDirectory, "notsharex.lock"), "");
-
     // Delete the images if they exist already
     if(exists(config.mainImagePath)) {
         remove(config.mainImagePath);
@@ -410,7 +402,7 @@ void screenshot(Config config) {
     }
 
     string fullMainImagePath = buildNormalizedPath(config.temporaryDirectory, config.mainImagePath);
-
+    
     // Take the screenshot
     const auto screenshotResult = Helpers.takeScreenshot(format("-r -s %s", fullMainImagePath));
 
@@ -485,9 +477,7 @@ void screenshot(Config config) {
             assert(0);
         }
     }
-    
+
     Helpers.copyToClipboard(std.string.strip(finalLink));
     Helpers.espeak(config.endMessage);
-
-    std.file.remove(buildPath(config.temporaryDirectory, "notsharex.lock"));
 }
