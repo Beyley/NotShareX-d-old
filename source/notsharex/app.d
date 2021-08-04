@@ -24,7 +24,7 @@ void main(string[] args)
         "config", &runConfig
     );
 
-    if(!exists(expandTilde(Config.configFilePath))) {
+    if(!exists(dirName(expandTilde(Config.configFilePath)))) {
         mkdir(dirName(expandTilde(Config.configFilePath)));
         Config.writeConfig(new Config());
         exit(0);
