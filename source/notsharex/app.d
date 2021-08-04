@@ -25,6 +25,7 @@ void main(string[] args)
     );
 
     if(!exists(expandTilde(Config.configFilePath))) {
+        mkdir(expandTilde(Config.configFilePath));
         Config.writeConfig(new Config());
         exit(0);
     }
@@ -118,7 +119,6 @@ void configWizard(Config config) {
     auto pinkText = style!q{
         textColor = Color(0xf7, 0xa8, 0xb8, 0xff);
     };
-
 
     Layout fill = layout!(1, "fill");
 
