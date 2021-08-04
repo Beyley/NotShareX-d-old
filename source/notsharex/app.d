@@ -187,11 +187,11 @@ void configWizard(Config config) {
     };
 
     auto loadCredFile = () {
-        if(config.connectionType == ConnectionType.curl) {
-            credNode.hide();
-        } else {
-            credNode.show();
-        }
+        // if(config.connectionType == ConnectionType.curl) {
+        //     credNode.hide();
+        // } else {
+        //     credNode.show();
+        // }
 
         string[] credFile = split(Helpers.readWholeFile(config.credFile), "\n");
 
