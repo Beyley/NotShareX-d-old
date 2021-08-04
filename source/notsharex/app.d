@@ -374,9 +374,13 @@ void configWizard(Config config) {
 
 /// Takes a screenshot
 void screenshot(Config config) {
-    if(strip(std.process.executeShell("pidof notsharex").output) != format("%s", std.process.thisProcessID())) {
+    if(exists(buildPath(config.temporaryDirectory, "notsharex.lock"))) {
+        std.file.remove(buildPath(config.temporaryDirectory, "notsharex.lock"));
+
         std.process.executeShell("killall notsharex");
     }
+
+    std.file.write(buildPath(config.temporaryDirectory, "notsharex.lock"), "");
 
     // Delete the images if they exist already
     if(exists(config.mainImagePath)) {
@@ -481,7 +485,9 @@ void screenshot(Config config) {
             assert(0);
         }
     }
-
+    
     Helpers.copyToClipboard(std.string.strip(finalLink));
     Helpers.espeak(config.endMessage);
+
+    std.file.remove(buildPath(config.temporaryDirectory, "notsharex.lock"));
 }
