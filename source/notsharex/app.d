@@ -421,7 +421,9 @@ void screenshot(Config config) {
         }
 
         case ConnectionType.curl: {
-            assert(0);
+            Helpers.curl(config);
+
+            break;
         }
 
         default: {

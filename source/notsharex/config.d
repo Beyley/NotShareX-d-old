@@ -44,6 +44,10 @@ class Config {
     /// The credentials file
     string credFile = "~/.config/notsharex/.creds";
 
+    string uploadCredsName = "userhash";
+    string userHash = "USER HASH";
+    string uploadFileName = "fileToUpload";
+
     /// Saves the current config
     void save() {
         Config.writeConfig(this);
