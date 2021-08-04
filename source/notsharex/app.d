@@ -1,7 +1,7 @@
 ///
 module notsharex.app;
 
-static import std.process;
+static import std.process, core.thread, std.datetime, std.algorithm.searching;
 import std.stdio, std.path, std.file, std.exception, std.format,
 std.algorithm, std.ascii, std.base64, std.conv, std.random, std.range, 
 std.json, std.utf, std.string, std.getopt;
@@ -13,7 +13,7 @@ import raylib;
 import notsharex.enums, notsharex.helpers, notsharex.config;
 
 /// The apps required for the app to work
-auto RequiredApps = [ "xfce4-screenshooter", "feh", "xdotool", "gio", "xsel", "espeak" ];
+auto RequiredApps = [ "xfce4-screenshooter", "feh", "xdotool", "gio", "xsel", "espeak", "xdpyinfo" ];
 
 /// Whether to run the configuration wizard
 bool runConfig = false;
@@ -374,6 +374,10 @@ void configWizard(Config config) {
 
 /// Takes a screenshot
 void screenshot(Config config) {
+    if(strip(std.process.executeShell("pidof notsharex").output) != format("%s", std.process.thisProcessID())) {
+        std.process.executeShell("killall notsharex");
+    }
+
     // Delete the images if they exist already
     if(exists(config.mainImagePath)) {
         remove(config.mainImagePath);
@@ -388,7 +392,17 @@ void screenshot(Config config) {
     if(config.staticPreview) {
 	    Helpers.takeStaticImage(config);
 
-        auto pid = std.process.spawnShell(format("feh %s -x -N -g 5440x1599"));
+        auto resolution = std.string.strip(std.process.executeShell("xdpyinfo | awk '/dimensions:/ { print $2; exit }'").output);
+
+        auto pid = std.process.spawnShell(format("feh %s -x -N -g %s", buildPath(config.temporaryDirectory, config.staticPreviewPath), resolution));
+
+        auto wid = std.process.executeShell(format("xdotool search --pid %s", pid));
+
+        while(!std.string.empty(wid)) {
+            wid = std.process.executeShell(format("xdotool search --pid %s", pid));
+
+            core.thread.Thread.sleep( std.datetime.dur!("msecs")( 50 ) );
+        }
     }
 
     string fullMainImagePath = buildNormalizedPath(config.temporaryDirectory, config.mainImagePath);
